@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tornado | Daily Protocol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus+Jakarta+Sans', sans-serif;
+            background: #050505;
+            color: #e2e8f0;
+            background-image: radial-gradient(circle at 2px 2px, #1a1a1a 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+        .glass {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+        }
+        select option { background: #1a1a1a; color: white; }
+        .active-glow {
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.4);
+            border: 1px solid rgba(99, 102, 241, 0.6);
+            transform: scale(1.01);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-12">
+
+    <div class="max-w-6xl mx-auto">
+        <div class="glass p-6 mb-8 text-center border-b-4 border-indigo-600">
+            <p id="motivation" class="text-lg italic font-light text-indigo-300 tracking-wide">"Ready for greatness..."</p>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+            <div class="text-center md:text-left">
+                <h1 class="text-6xl font-extrabold tracking-tighter text-white uppercase">Tornado<span class="text-indigo-500">.</span></h1>
+                <p class="text-gray-500 font-medium tracking-[0.3em] uppercase text-[10px] mt-2">Ali Akbar's Master Protocol</p>
+            </div>
+            <div id="liveClock" class="text-4xl font-bold text-indigo-400 tabular-nums bg-indigo-500/5 px-8 py-3 rounded-2xl border border-indigo-500/20 shadow-2xl">00:00:00</div>
+        </div>
+
+        <div class="grid lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-4 space-y-6">
+                <div class="glass p-8 sticky top-8">
+                    <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">
+                        <span class="w-2 h-6 bg-indigo-500 rounded-full"></span> New Activity
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <input type="text" id="taskName" placeholder="Extra Note (Optional)" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-indigo-500 text-white transition-all">
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-[10px] uppercase text-gray-500 ml-2">Start</label>
+                                <input type="time" id="startTime" class="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white outline-none focus:border-indigo-500">
+                            </div>
+                            <div>
+                                <label class="text-[10px] uppercase text-gray-500 ml-2">End</label>
+                                <input type="time" id="endTime" class="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white outline-none focus:border-indigo-500">
+                            </div>
+                        </div>
+
+                        <label class="text-[10px] uppercase text-gray-500 ml-2">Task Type</label>
+                        <select id="category" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-indigo-500 transition-all">
+                            <optgroup label="🌅 Morning">
+                                <option value="🌅 Wake Up">🌅 Wake Up</option>
+                                <option value="🪥 Brush Teeth">🪥 Brush Teeth</option>
+                                <option value="💦 Wash Face">💦 Wash Face</option>
+                                <option value="🙏 Morning Prayer">🙏 Morning Prayer</option>
+                                <option value="👕 Get Dressed">👕 Get Dressed</option>
+                                <option value="🍳 Breakfast">🍳 Breakfast</option>
+                            </optgroup>
+                            <optgroup label="🏫 School">
+                                <option value="🏫 Go to School">🏫 Go to School</option>
+                                <option value="📚 Class Time">📚 Class Time</option>
+                                <option value="⏰ Break Time">⏰ Break Time</option>
+                                <option value="🍱 School Lunch">🍱 Lunch at School</option>
+                                <option value="🏠 Return Home">🏠 Return Home</option>
+                            </optgroup>
+                            <optgroup label="🏠 Home">
+                                <option value="🍽️ Lunch">🍽️ Lunch (Home)</option>
+                                <option value="😴 Rest Time">😴 Rest Time</option>
+                                <option value="✏️ Homework">✏️ Homework</option>
+                                <option value="📖 Reading / Study">📖 Reading / Study</option>
+                            </optgroup>
+                            <optgroup label="⚽ Play & Fun">
+                                <option value="⚽ Physical Play">⚽ Physical Play (Cricket / Football)</option>
+                                <option value="🚶 Outdoor Walk">🚶 Outdoor Walk</option>
+                                <option value="🎮 Video Games">🎮 Video Games (Free Fire / Others)</option>
+                                <option value="🧩 Indoor Games">🧩 Free Time / Indoor Games</option>
+                            </optgroup>
+                            <optgroup label="🌙 Night">
+                                <option value="🙏 Prayer">🙏 Prayer (Evening/Night)</option>
+                                <option value="🍪 Snack Time">🍪 Snack Time</option>
+                                <option value="👨‍👩‍👦 Family Time">👨‍👩‍👦 Family / Social Time</option>
+                                <option value="🍛 Dinner">🍛 Dinner</option>
+                                <option value="🛏️ Bed Prep">🛏️ Get Ready for Bed</option>
+                                <option value="🌙 Sleep">🌙 Sleep</option>
+                            </optgroup>
+                        </select>
+
+                        <button onclick="addTask()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-2xl shadow-lg transition-all active:scale-95 mt-4">
+                            Add to Timeline
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8">
+                <div class="flex justify-between items-center mb-6 px-2">
+                    <h2 class="text-2xl font-bold text-white tracking-tight">Today's Protocol</h2>
+                    <button onclick="clearAll()" class="text-xs text-gray-600 hover:text-red-500 uppercase font-bold tracking-widest transition-all">Reset Day</button>
+                </div>
+                <div id="timeline" class="space-y-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quotes = [
+            "Tornado, greatness is a choice, not a chance.", "Ali Akbar, the grind never sleeps.", 
+            "Don't stop until you're proud.", "Discipline equals freedom.",
+            "Work hard in silence, let success be your noise.", "The only limit is your mind.",
+            "Average is the enemy.", "Wake up with determination, go to bed with satisfaction.",
+            "Success is the sum of small efforts repeated daily.", "Your future self is watching you.",
+            "Dream big, work bigger.", "Be the storm.", "Consistency is the king of growth.",
+            "One day or Day One. You decide.", "Hard work beats talent when talent doesn't work hard.",
+            "The best way to predict the future is to create it.", "Focus on being productive instead of busy.",
+            "Tornado Mode: ON.", "Ali Akbar: The legend starts now.", "Master your time, master your life.",
+            "No pressure, no diamonds.", "The secret of your future is hidden in your routine.",
+            "Rise and grind, Tornado.", "Win the morning, win the day.", "Action is the key to success.",
+            "Stay humble, stay focused.", "Everything you want is on the other side of hard work.",
+            "Don't wish for it, work for it.", "Your only limit is you.", "Keep going, you're getting closer.",
+            "Focus on the goal.", "Results require time and effort.", "Make every second count.",
+            "Your habits will build your empire.", "Stop overthinking, start doing.",
+            "The pain of discipline is better than the pain of regret.", "Be obsessed with improvement.",
+            "Tornado: Level up today.", "Ali Akbar: 1% better every day.", "Hustle in silence.",
+            "Your routine is your roadmap.", "Great things take time.", "Believe in the process.",
+            "Stay hungry for success.", "Be the best version of yourself.", "Discipline is the bridge to goals.",
+            "Control your day or it will control you.", "Work for your dreams.", "Be stronger than your excuses."
+        ];
+
+        let tasks = JSON.parse(localStorage.getItem('tornado_v4_clean')) || [];
+
+        function setQuote() {
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('motivation').innerText = `"${randomQuote}"`;
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('liveClock').innerText = now.toLocaleTimeString('en-GB');
+            
+            document.querySelectorAll('.task-card').forEach(card => {
+                if (timeStr >= card.dataset.start && timeStr <= card.dataset.end) {
+                    card.classList.add('active-glow');
+                } else {
+                    card.classList.remove('active-glow');
+                }
+            });
+        }
+
+        function renderTasks() {
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+            tasks.sort((a, b) => a.start.localeCompare(b.start));
+
+            if(tasks.length === 0) {
+                timeline.innerHTML = `<div class="glass p-20 text-center text-gray-600 border-dashed border-2 border-white/5">Nothing scheduled. Level up your day, Tornado.</div>`;
+                return;
+            }
+
+            tasks.forEach((t, i) => {
+                const div = document.createElement('div');
+                div.className = "glass p-6 flex justify-between items-center task-card transition-all duration-500 group";
+                div.dataset.start = t.start; div.dataset.end = t.end;
+                div.innerHTML = `
+                    <div class="flex items-center gap-5">
+                        <div class="text-2xl bg-indigo-500/10 h-14 w-14 rounded-2xl flex items-center justify-center border border-indigo-500/20 shadow-inner">
+                            ${t.cat.split(' ')[0]}
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-indigo-400 font-bold uppercase tracking-widest">${t.cat.split(' ').slice(1).join(' ')}</span>
+                            <h3 class="text-xl font-bold text-white">${t.name || 'Set Protocol'}</h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="text-right">
+                            <p class="text-white font-mono text-lg font-bold">${t.start} — ${t.end}</p>
+                            <p class="text-[10px] text-gray-500 uppercase">Duration</p>
+                        </div>
+                        <button onclick="deleteTask(${i})" class="text-gray-600 opacity-0 group-hover:opacity-100 transition-all hover:text-red-500">✕</button>
+                    </div>
+                `;
+                timeline.appendChild(div);
+            });
+        }
+
+        function addTask() {
+            const name = document.getElementById('taskName').value;
+            const start = document.getElementById('startTime').value;
+            const end = document.getElementById('endTime').value;
+            const cat = document.getElementById('category').value;
+            if(!start || !end) { alert("Please set a time range."); return; }
+            
+            tasks.push({ name, start, end, cat });
+            localStorage.setItem('tornado_v4_clean', JSON.stringify(tasks));
+            document.getElementById('taskName').value = '';
+            renderTasks();
+        }
+
+        function deleteTask(i) {
+            tasks.splice(i, 1);
+            localStorage.setItem('tornado_v4_clean', JSON.stringify(tasks));
+            renderTasks();
+        }
+
+        function clearAll() { if(confirm("Clear all tasks for today?")) { tasks = []; localStorage.removeItem('tornado_v4_clean'); renderTasks(); } }
+
+        setQuote();
+        setInterval(updateClock, 1000);
+        renderTasks();
+    </script>
+</body>
+</html>
